@@ -22,7 +22,7 @@ public class HandleStartscreenButtons : MonoBehaviour
     private void setListeners()
     {
         newGameButton.onClick.AddListener(delegate(){if(OnNewGame!=null) OnNewGame();});
-        settingsButton.onClick.AddListener(delegate(){if(OnSettings!=null)OnSettings();});
+        settingsButton.onClick.AddListener(delegate(){if(OnSettings!=null) OnSettings();});
         exitButton.onClick.AddListener(delegate(){if(OnExit!=null) OnExit();});
     }
 }

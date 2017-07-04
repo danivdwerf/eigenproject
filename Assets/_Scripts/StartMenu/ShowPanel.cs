@@ -14,7 +14,7 @@ public enum Panels
 public class ShowPanel : MonoBehaviour
 {
     [SerializeField]private GameObject[] panels;
-    [SerializeField]private List<ButtonNavigation> navigationScripts;
+    private List<ButtonNavigation> navigationScripts;
     public event Action<int> OnPanelChange;
 
     private void Awake()

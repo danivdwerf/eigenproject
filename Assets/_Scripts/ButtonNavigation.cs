@@ -1,21 +1,33 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+using System.Collections.Generic;
+
 public class ButtonNavigation : MonoBehaviour 
 {
     private enum NavigationType{horizontal, vertical};
     [SerializeField]private NavigationType navigation;
 
-    private Selectable[] selectables;
+    private List<Selectable> selectables;
     private string selectAxis;
     private int selectedIndex;
     private bool holding;
 
     private void Start()
     {
-        selectables = this.GetComponentsInChildren<Selectable>();
-        if (this.selectables.Length == 0)
+        selectables = new List<Selectable>();
+        var things = this.GetComponentsInChildren<Selectable>();
+        if (things.Length == 0)
+        {
             this.enabled = false;
+            return;
+        }
+        for (var i = 0; i < things.Length; i++)
+        {
+            if (things[i].IsActive())
+                selectables.Add(things[i]);
+                
+        }
         if (navigation == NavigationType.horizontal)
             selectAxis = Controller.LeftStickX;
         if (navigation == NavigationType.vertical)
@@ -51,10 +63,10 @@ public class ButtonNavigation : MonoBehaviour
             holding = true;
         }
 
-        if (selectedIndex >= selectables.Length)
+        if (selectedIndex >= selectables.Count)
             selectedIndex = 0;
         if (selectedIndex < 0)
-            selectedIndex = selectables.Length - 1;
+            selectedIndex = selectables.Count - 1;
 
         select();
     }

@@ -3,21 +3,15 @@ using System.IO;
 
 public class CreateNewGame : MonoBehaviour 
 {
-    private HandleStartscreenButtons buttons;
-
+    private SaveValues saveValues;
     private void Start()
     {
-        buttons = this.GetComponent<HandleStartscreenButtons>();
-        buttons.OnNewGame += createGame;
+        GameObject.FindGameObjectWithTag(Tags.gameController).GetComponent<HandleStartscreenButtons>().OnNewGame += createGame;
+        saveValues = GameObject.FindGameObjectWithTag(Tags.gameController).GetComponent<SaveValues>();
     }
 
     private void createGame()
     {
-        var path = Application.persistentDataPath + "/safedata";
-        if (!Directory.Exists(path))
-            Directory.CreateDirectory(path);
-        
-        FileStream fStream = File.Create(path + "Safe.dat");
-        fStream.Close();
+        saveValues.save();
     }
 }
